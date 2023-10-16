@@ -8,17 +8,20 @@ public class Ground : MonoBehaviour
     private bool onGround;
     private float friction;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        EvaluateCollision(collision);
+        RetrieveFriction(collision);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionStay(Collision collision)
     {
-        
+        EvaluateCollision(collision);
+        RetrieveFriction(collision);
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        onGround = false;
+        friction = 0;
     }
 
     private void EvaluateCollision(Collision collision)
@@ -40,5 +43,15 @@ public class Ground : MonoBehaviour
         {
             friction = material.dynamicFriction;
         }
+    }
+
+    public bool GetOnGround()
+    {
+        return onGround;
+    }
+
+    public float GetFriction()
+    {
+        return friction;
     }
 }
